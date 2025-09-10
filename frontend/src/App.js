@@ -32,7 +32,7 @@ function App() {
         {}
         <nav style={{ padding: '2rem', backgroundColor: '#333', textAlign: 'center' }}>
           <Link to="/" style={{ color: 'white', margin: '0 15px', textDecoration: 'none', fontWeight: 'bold'}}>Início</Link>
-          <Link to="/pacientes" style={{ color: 'white', margin: '0 15px', textDecoration: 'none', fontWeight: 'bold'}}>Listar Pacientes</Link>
+           <Link to="####" style={{ color: 'white', margin: '0 15px', textDecoration: 'none', fontWeight: 'bold'}}>Cadastrar Pacientes</Link>
           <Link to="/pacientes/pesquisar" style={{ color: 'white', margin: '0 15px', textDecoration: 'none', fontWeight: 'bold'}}>Pesquisar Pacientes</Link>
         </nav>
       </header>

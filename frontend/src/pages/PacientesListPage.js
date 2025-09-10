@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import api from '../services/api';
 import './PacientesListPage.css';
+import { formatCPF, formatCelular } from '../services/format';
 
 function PacientesListPage() {
     const [pacientes, setPacientes] = useState([]);
@@ -36,8 +37,8 @@ function PacientesListPage() {
                     {pacientes.map(paciente => (
                         <tr key={paciente.id}>
                             <td>{paciente.nome_completo}</td>
-                            <td>{paciente.cpf}</td>
-                            <td>{paciente.celular}</td>
+                            <td>{formatCPF(paciente.cpf)}</td>
+                            <td>{formatCelular(paciente.celular)}</td>
                             <td>{paciente.email}</td>
                             <td className="acoes">
                                 <button className="btn-ver-exames">Ver Exames</button>

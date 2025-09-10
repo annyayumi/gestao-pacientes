@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import api from '../services/api';
 import './PesquisaPacientesPage.css';
+import { formatCPF, formatCelular } from '../services/format';
 
 function PesquisaPacientesPage() {
     const [searchType, setSearchType] = useState('todos');
@@ -107,8 +108,8 @@ function PesquisaPacientesPage() {
                                 <tr key={paciente.id}>
                                     <td>{paciente.id}</td>
                                     <td>{paciente.nome_completo}</td>
-                                    <td>{paciente.cpf}</td>
-                                    <td>{paciente.celular}</td>
+                                    <td>{formatCPF(paciente.cpf)}</td>
+                                    <td>{formatCelular(paciente.celular)}</td>
                                     <td>{paciente.email}</td>
                                     <td className="acoes">
                                         <button className="btn-ver-exames">Ver Exames</button>

@@ -1,0 +1,115 @@
+.pesquisa-container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.search-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    align-items: flex-end;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 2rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.form-group label {
+    margin-bottom: 0.5rem;
+    color: #555;
+    font-weight: bold;
+}
+
+.form-group select,
+.form-group input {
+    padding: 0.75rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.form-group input:disabled {
+    background-color: #f2f2f2;
+    cursor: not-allowed;
+}
+
+.search-button {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 4px;
+    background-color: #4853a6;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.search-button:hover:not(:disabled) {
+    background-color: #0056b3;
+}
+
+.search-button:disabled {
+    background-color: #a0a0a0;
+    cursor: wait;
+}
+
+.results-container {
+    margin-top: 2rem;
+}
+
+.error-message {
+    color: #dc3545;
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    padding: 1rem;
+    border-radius: 4px;
+    text-align: center;
+}
+
+.no-results-message {
+    text-align: center;
+    color: #777;
+    font-size: 1.1rem;
+    padding: 2rem;
+}
+
+.pacientes-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+.pacientes-table th, .pacientes-table td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+}
+.pacientes-table thead {
+    background-color: #133d9e;
+    color: white;
+}
+.pacientes-table tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.acoes button {
+    margin-right: 8px;
+    padding: 6px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    color: white;
+    font-weight: bold;
+}
+
+.btn-ver-exames { background-color: #17a2b8; }
+.btn-editar { background-color: #33bc89; }
+.btn-excluir { background-color: #dc3545; }

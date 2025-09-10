@@ -14,7 +14,7 @@ Com ela, é possível visualizar pacientes, acessar seus exames, além de adicio
 
 ### 🔧 Próximas Funcionalidades
 
-- [ ] **AC 1** – Exibir todos os pacientes cadastrados e permitir a busca por ID e CPF 
+- [X] **AC 1** – Exibir todos os pacientes cadastrados e permitir a busca por ID e CPF 
 - [ ] **AC 2** – Cadastrar um novo paciente  
 - [ ] **AC 3** – Editar os dados de um paciente existente  
 - [ ] **AC 4** – Excluir um paciente do banco de dados  

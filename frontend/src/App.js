@@ -1,10 +1,12 @@
 import React from 'react';
 import { Routes, Route, Link } from 'react-router-dom';
 
-import PacientesListPage from './pages/PacientesListPage';
+/*import PacientesListPage from './pages/PacientesListPage';*/
 import './pages/PacientesListPage.css';
 import PesquisaPacientesPage from './pages/PesquisaPacientesPage';
 import './pages/PesquisaPacientesPage.css';
+import CadastroPacientePage from './pages/CadastroPaciente';
+import './pages/CadastroPaciente.css';
 
 function HomePage() {
   return(
@@ -32,7 +34,7 @@ function App() {
         {}
         <nav style={{ padding: '2rem', backgroundColor: '#333', textAlign: 'center' }}>
           <Link to="/" style={{ color: 'white', margin: '0 15px', textDecoration: 'none', fontWeight: 'bold'}}>Início</Link>
-           <Link to="####" style={{ color: 'white', margin: '0 15px', textDecoration: 'none', fontWeight: 'bold'}}>Cadastrar Pacientes</Link>
+           <Link to="/pacientes/novo" style={{ color: 'white', margin: '0 15px', textDecoration: 'none', fontWeight: 'bold'}}>Cadastrar Pacientes</Link>
           <Link to="/pacientes/pesquisar" style={{ color: 'white', margin: '0 15px', textDecoration: 'none', fontWeight: 'bold'}}>Pesquisar Pacientes</Link>
         </nav>
       </header>
@@ -41,7 +43,7 @@ function App() {
         {/* Gerenciador de Rotas */}
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/pacientes" element={<PacientesListPage />} />
+          <Route path="/pacientes/novo" element={<CadastroPacientePage />} />
           <Route path="/pacientes/pesquisar" element={<PesquisaPacientesPage />} />
         </Routes>
       </main>

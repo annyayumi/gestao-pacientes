@@ -1,15 +1,42 @@
 const db = require('../db');
 
 exports.criarPaciente = async (req, res) => {
-    const { nome_completo, cpf, data_nascimento, celular, email } = req.body;
+    const { nome_completo, celular, cpf, email, exames } = req.body;
+
+    if (!nome_completo || !cpf || !exames || exames.length === 0) {
+        return res.status(400).json({ error: 'Nome, CPF e ao menos um exame são obrigatórios.' });
+    }
+
+    const client = await db.pool.connect();
+
     try {
-        const result = await db.query(
-            'INSERT INTO pacientes (nome_completo, cpf, data_nascimento, celular, email) VALUES ($1, $2, $3, $4, $5) RETURNING *',
-            [nome_completo, cpf, data_nascimento, celular, email]
-        );
-        res.status(201).json(result.rows[0]);
+        await client.query('BEGIN');
+
+        const cpfExistente = await client.query('SELECT id FROM pacientes WHERE cpf = $1', [cpf]);
+        if (cpfExistente.rows.length > 0) {
+            await client.query('ROLLBACK');
+            return res.status(409).json({ error: 'CPF já cadastrado no sistema.' });
+        }
+
+        const pacienteQuery = 'INSERT INTO pacientes (nome_completo, celular, cpf, email) VALUES ($1, $2, $3, $4) RETURNING id';
+        const pacienteResult = await client.query(pacienteQuery, [nome_completo, celular, cpf, email]);
+        const novoPacienteId = pacienteResult.rows[0].id;
+
+        const exameQuery = 'INSERT INTO paciente_exames (paciente_id, exame_id) VALUES ($1, $2)';
+        
+        for (const exameId of exames) {
+            await client.query(exameQuery, [novoPacienteId, exameId]);
+        }
+
+        await client.query('COMMIT');
+        res.status(201).json({ message: 'Paciente cadastrado com sucesso!', pacienteId: novoPacienteId });
+
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        await client.query('ROLLBACK');
+        console.error('Erro ao criar paciente:', error);
+        res.status(500).json({ error: 'Ocorreu um erro interno ao cadastrar o paciente.' });
+    } finally {
+        client.release();
     }
 };
 

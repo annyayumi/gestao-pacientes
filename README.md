@@ -113,11 +113,11 @@ Para rodar o backend desta aplicação, é necessário ter um banco de dados Pos
 Abra 2 terminais:
 
   -Terminal 1: dentro da pasta frontend - npm start
-  
+
   -Terminal 2: dentro da pasta backend - npm run dev
 
-## 📫 Contribuindo para <gestao-pacientes>
-Para contribuir com <gestao-pacientes>, siga estas etapas:
+## 📫 Contribuindo
+Para contribuir com o projeto, siga estas etapas:
 
 1. Bifurque este repositório.
 2. Crie um ramo: git checkout -b <nome_branch>.

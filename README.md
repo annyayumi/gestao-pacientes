@@ -102,8 +102,8 @@ Para rodar o backend desta aplicação, é necessário ter um banco de dados Pos
     );
   ```
 
-    ### Configurar a conexão
-    Por fim, o backend precisa saber como se conectar ao banco de dados que você acabou de criar.
+  ### Configurar a conexão
+  Por fim, o backend precisa saber como se conectar ao banco de dados que você acabou de criar.
 
     - Na pasta backend, procure por um arquivo chamado .env.example ou similar.
     - Crie uma cópia deste arquivo e renomeie-a para .env.

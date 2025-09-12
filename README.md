@@ -32,28 +32,39 @@ Com ela, é possível visualizar pacientes, acessar seus exames, além de adicio
 
 ## Estrutura do Banco de Dados
 
-gestao_pacientes
-    pacientes {
-        SERIAL id PK "ID Único do Paciente"
-        VARCHAR(255) nome_completo NOT_NULL
-        VARCHAR(20) celular
-        VARCHAR(11) cpf UNIQUE NOT_NULL
-        VARCHAR(255) email UNIQUE
-    }
-    exames {
-        SERIAL id PK "ID Único do Exame"
-        VARCHAR(100) nome_exame NOT_NULL
-        TEXT descricao
-    }
-    paciente_exames {
-        SERIAL id PK "ID Único da Associação"
-        INT paciente_id FK "Referencia pacientes.id"
-        INT exame_id FK "Referencia exames.id"
-        TIMESTAMPTZ data_registro "Data do registro do exame"
-    }
+### gestao_pacientes
 
-    pacientes ||--o{ paciente_exames : "realiza"}
-    exames ||--o{ paciente_exames : "é realizado por"}
+
+	**Tabela pacientes**
+|Coluna|Tipo  |Restrições  |Descrição |
+|--|--|--|--|
+| id |SERIAL  |Primary Key  |Identificador único e auto-incremetal do paciente  |
+|nome_completo|VARCHAR(255)|NOT_NULL|Nome completo do paciente|
+|celular|VARCHAR(20)|  |Número de celular do paciente|
+|cpf|VARCHAR(11)|UNIQUE, NOT_NULL|Número do CPF do paciente (deve ser único)|
+|email|VARCHAR(255)| UNIQUE|Email do paciente (deve ser único)|
+
+
+	**Tabela exames** 
+|Coluna|Tipo  |Restrições  |Descrição |
+|--|--|--|--|
+| id |SERIAL  |Primary Key  |Identificador único e auto-incremetal do exame |
+|nome_exame|VARCHAR(100)|NOT_NULL|Nome do exame|
+|descricao|TEXT|  |Descrição básica do exame|
+
+	**Tabela paciente_exames**
+
+|Coluna|Tipo  |Restrições  |Descrição |
+|--|--|--|--|
+| id |SERIAL  |Primary Key  |Identificador único e auto-incremetal da relação entre paciente e exame |
+|paciente_id|INT|FOREIGN KEY|Referencia a coluna id da tabela pacientes|
+|exame_id|INT|FOREIGN KEY  |Referencia a coluna id faa tabela exames|
+|data_registro|TIMESTAMPTZ|UNIQUE, NOT_NULL|Data e hora do registro do paciente no sistema|
+ 
+
+		pacientes ||--o{ paciente_exames : "realiza"}
+
+		exames ||--o{ paciente_exames : "é realizado por"}
 
 ## Instalação e Como Rodar o Projeto
 

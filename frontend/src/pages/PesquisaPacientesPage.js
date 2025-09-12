@@ -35,7 +35,7 @@ function PesquisaPacientesPage() {
                     setIsLoading(false);
                     return;
                 }
-                response = await api.get(`/pacientes?cpf=${searchTerm}`);
+                response = await api.get(`/pacientes/cpf?cpf=${searchTerm}`);
             }
 
             const resultsArray = Array.isArray(response.data) ? response.data : [response.data];

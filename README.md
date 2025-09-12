@@ -30,8 +30,37 @@ Com ela, é possível visualizar pacientes, acessar seus exames, além de adicio
 ![Node.js](https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)
 
+## Estrutura do Banco de Dados
+
+```mermaid
+gestao_pacientes
+    pacientes {
+        SERIAL id PK "ID Único do Paciente"
+        VARCHAR(255) nome_completo NOT_NULL
+        VARCHAR(20) celular
+        VARCHAR(11) cpf UNIQUE NOT_NULL
+        VARCHAR(255) email UNIQUE
+    }
+    exames {
+        SERIAL id PK "ID Único do Exame"
+        VARCHAR(100) nome_exame NOT_NULL
+        TEXT descricao
+    }
+    paciente_exames {
+        SERIAL id PK "ID Único da Associação"
+        INT paciente_id FK "Referencia pacientes.id"
+        INT exame_id FK "Referencia exames.id"
+        TIMESTAMPTZ data_registro "Data do registro do exame"
+    }
+
+    pacientes ||--o{ paciente_exames : "realiza"}
+    exames ||--o{ paciente_exames : "é realizado por"}
+    
+```mermaid
 
 ## Instalação e Como Rodar o Projeto
+
+- 
 
 ## Como Usar
 

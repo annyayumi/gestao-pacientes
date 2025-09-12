@@ -23,54 +23,105 @@ Com ela, é possível visualizar pacientes, acessar seus exames, além de adicio
   - Impressão dos laudos mediante solicitação do paciente  
 
 
-## 🛠 Tecnologias Utilizadas
+## 🛠️ Tecnologias Utilizadas
 
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=000)
 ![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
 ![Node.js](https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white)
 
-## Estrutura do Banco de Dados
+## 🚀 Começando
+Estas instruções permitirão que você obtenha uma cópia do projeto em operação em sua máquina local para fins de desenvolvimento e teste. Certifique-se de que: 
 
-### gestao_pacientes
+- Você instalou a versão mais recente de <Node.js, Git / cors, dotenv, express, pg, nodemon, mongoose>
+- Você tem uma máquina <Windows / Linux / Mac>
 
+### Como instalar o projeto
 
-	**Tabela pacientes**
-|Coluna|Tipo  |Restrições  |Descrição |
-|--|--|--|--|
-| id |SERIAL  |Primary Key  |Identificador único e auto-incremetal do paciente  |
-|nome_completo|VARCHAR(255)|NOT_NULL|Nome completo do paciente|
-|celular|VARCHAR(20)|  |Número de celular do paciente|
-|cpf|VARCHAR(11)|UNIQUE, NOT_NULL|Número do CPF do paciente (deve ser único)|
-|email|VARCHAR(255)| UNIQUE|Email do paciente (deve ser único)|
+- No terminal (Git Bash, CMD, Power Shell), entre na pasta onde deseja clonar o projeto: <cd sistema-pacientes>
+- Aplique o comando: <git clone https://github.com/annyayumi/gestao-pacientes.git>
+- Instalar as dependências:
+  - cd gestao-pacientes
+  - cd backend
+  - npm install
+  - cd ..
+  - cd frontend
+  - npm install mongoose
 
+### Configuração do Banco de Dados
+Para rodar o backend desta aplicação, é necessário ter um banco de dados PostgreSQL configurado e populado com as tabelas corretas. Siga os passos abaixo.
 
-	**Tabela exames** 
-|Coluna|Tipo  |Restrições  |Descrição |
-|--|--|--|--|
-| id |SERIAL  |Primary Key  |Identificador único e auto-incremetal do exame |
-|nome_exame|VARCHAR(100)|NOT_NULL|Nome do exame|
-|descricao|TEXT|  |Descrição básica do exame|
+  ### Pré-requisitos
+  - **PostgreSQL:** Garanta que você tenha o PostgreSQL instalado na sua máquina. Se não tiver, você pode baixá-lo em [postgresql.org](https://www.postgresql.org/download/).
+  - **Cliente SQL (Recomendado):[pgAdmin](https://www.pgadmin.org/) facilita a visualização e gerenciamento do banco de dados.
 
-	**Tabela paciente_exames**
+  ### Criação do Banco de Dados
+  1.  Abra seu cliente SQL ou o terminal `psql`.
+  2.  Execute o seguinte comando SQL para criar o banco. Você pode alterar o nome `gestao_pacientes` se desejar, mas lembre-se de atualizar o arquivo de configuração do backend (`.env` ou `db.js`) com o novo nome.
 
-|Coluna|Tipo  |Restrições  |Descrição |
-|--|--|--|--|
-| id |SERIAL  |Primary Key  |Identificador único e auto-incremetal da relação entre paciente e exame |
-|paciente_id|INT|FOREIGN KEY|Referencia a coluna id da tabela pacientes|
-|exame_id|INT|FOREIGN KEY  |Referencia a coluna id faa tabela exames|
-|data_registro|TIMESTAMPTZ|UNIQUE, NOT_NULL|Data e hora do registro do paciente no sistema|
- 
+    ```sql
+    CREATE DATABASE gestao_pacientes;
+    ```
+  
+  Após criar e conectar-se ao banco `gestao_pacientes`, execute o script SQL abaixo para criar todas as tabelas necessárias com seus respectivos relacionamentos.
 
-		pacientes ||--o{ paciente_exames : "realiza"}
+  ```sql
+    -- Tabela para os dados dos pacientes
+  CREATE TABLE pacientes (
+    id SERIAL PRIMARY KEY,
+    nome_completo VARCHAR(255) NOT NULL,
+    celular VARCHAR(20),
+    cpf VARCHAR(11) UNIQUE NOT NULL,
+    email VARCHAR(255) UNIQUE
+  );
 
-		exames ||--o{ paciente_exames : "é realizado por"}
+  -- Tabela para o catálogo de exames disponíveis
+  CREATE TABLE exames (
+      id SERIAL PRIMARY KEY,
+      nome_exame VARCHAR(100) NOT NULL,
+      descricao TEXT
+  );
 
-## Instalação e Como Rodar o Projeto
+  -- Tabela de associação para conectar pacientes e exames
+  CREATE TABLE paciente_exames (
+      id SERIAL PRIMARY KEY,
+      paciente_id INTEGER NOT NULL,
+      exame_id INTEGER NOT NULL,
+      data_registro TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
-- 
+    -- Definição das chaves estrangeiras e suas regras
+    CONSTRAINT fk_paciente
+        FOREIGN KEY(paciente_id) 
+        REFERENCES pacientes(id)
+        ON DELETE CASCADE, -- Se um paciente for deletado, seus registros de exames também serão.
 
-## Como Usar
+    CONSTRAINT fk_exame
+        FOREIGN KEY(exame_id) 
+        REFERENCES exames(id)
+        ON DELETE RESTRICT -- Impede que um tipo de exame seja deletado se estiver em uso.
+    );
+  ```
+
+    ### Configurar a conexão
+    Por fim, o backend precisa saber como se conectar ao banco de dados que você acabou de criar.
+
+    - Na pasta backend, procure por um arquivo chamado .env.example ou similar.
+    - Crie uma cópia deste arquivo e renomeie-a para .env.
+    - Abra o arquivo .env e preencha as variáveis de ambiente com suas credenciais do PostgreSQL.
+
+### Como rodar o projeto
+- Abra 2 terminais:
+  -Terminal 1: dentro da pasta frontend - npm start
+  -Terminal 2: dentro da pasta backend - npm run dev
+
+## 📫 Contribuindo para <gestao-pacientes>
+Para contribuir com <gestao-pacientes>, siga estas etapas:
+
+1. Bifurque este repositório.
+2. Crie um ramo: git checkout -b <nome_branch>.
+3. Faça suas alterações e confirme-as:git commit -m '<mensagem_commit>'
+4. Envie para o branch original:git push origin <nome_do_projeto> / <local>
+5. Solicite um pull request.
 
 ## 👩‍💻 Autor
 

@@ -32,7 +32,6 @@ Com ela, é possível visualizar pacientes, acessar seus exames, além de adicio
 
 ## Estrutura do Banco de Dados
 
-```mermaid
 gestao_pacientes
     pacientes {
         SERIAL id PK "ID Único do Paciente"
@@ -55,8 +54,6 @@ gestao_pacientes
 
     pacientes ||--o{ paciente_exames : "realiza"}
     exames ||--o{ paciente_exames : "é realizado por"}
-    
-```mermaid
 
 ## Instalação e Como Rodar o Projeto
 

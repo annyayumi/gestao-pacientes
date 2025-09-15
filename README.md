@@ -69,10 +69,10 @@ Para rodar o backend desta aplicação, é necessário ter um banco de dados Pos
     -- Tabela para os dados dos pacientes
   CREATE TABLE pacientes (
     id SERIAL PRIMARY KEY,
-    nome_completo VARCHAR(255) NOT NULL,
+    nome_completo VARCHAR(50) NOT NULL,
     celular VARCHAR(20),
     cpf VARCHAR(11) UNIQUE NOT NULL,
-    email VARCHAR(255) UNIQUE
+    email VARCHAR(100) UNIQUE
   );
 
   -- Tabela para o catálogo de exames disponíveis

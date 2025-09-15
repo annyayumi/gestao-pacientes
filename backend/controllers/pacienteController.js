@@ -4,7 +4,7 @@ exports.criarPaciente = async (req, res) => {
     const { nome_completo, celular, cpf, email, exames } = req.body;
 
     if (!nome_completo || !cpf || !exames || exames.length === 0) {
-        return res.status(400).json({ error: 'Nome, CPF e ao menos um exame são obrigatórios.' });
+        return res.status(400).json({ error: 'Selecione pelo menos um exame' });
     }
 
     const client = await db.pool.connect();

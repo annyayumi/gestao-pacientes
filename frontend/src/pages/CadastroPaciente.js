@@ -73,7 +73,7 @@ function CadastroPacientePage() {
         <div className="cadastro-container">
             <h1>Cadastro Paciente</h1>
             <form onSubmit={handleSubmit} className="cadastro-form">
-                <input name="nome_completo" value={formData.nome_completo} onChange={handleChange} placeholder="Nome Completo" required />
+                <input name="nome_completo" value={formData.nome_completo} onChange={handleChange} placeholder="Nome Completo *" required />
                 
                 <IMaskInput
                     mask="(00) 00000-0000"
@@ -91,7 +91,7 @@ function CadastroPacientePage() {
                     onChange={handleChange}
                     name="cpf"
                     type='text'
-                    placeholder='CPF'
+                    placeholder='CPF *'
                     required
                     onAccept={(value) => handleChange({ target: { name: 'cpf', value } })}
                 />
@@ -99,7 +99,7 @@ function CadastroPacientePage() {
                 <input type="email" name="email" value={formData.email} onChange={handleChange} placeholder="Email" />
                 
                 <details className="exames-accordion">
-                    <summary>Selecionar Exames ({selectedExames.size} selecionados)</summary>
+                    <summary>Selecionar Exames ({selectedExames.size} selecionados) *</summary>
                     <div className="exames-list">
                         {examesDisponiveis.map(exame => (
                             <label key={exame.id} className="exame-item">
@@ -113,7 +113,7 @@ function CadastroPacientePage() {
                         ))}
                     </div>
                 </details>
-
+                <p>* Preenchimento obrigatório</p>
                 <div className='botao-main'>
                     <button className='botao' type="submit" disabled={loading}>
                         {loading ? 'Cadastrando...' : 'Cadastrar Paciente'}

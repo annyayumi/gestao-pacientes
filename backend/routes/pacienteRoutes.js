@@ -3,6 +3,7 @@ const router = express.Router();
 const pacienteController = require('../controllers/pacienteController');
 
 router.post('/pacientes', pacienteController.criarPaciente);
+
 router.get('/pacientes', pacienteController.listarPacientes);
 router.get('/pacientes/cpf', pacienteController.pacienteCpf);
 router.get('/pacientes/:id', pacienteController.pacientId);

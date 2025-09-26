@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import api from '../services/api';
 import './PesquisaPacientesPage.css';
 import { formatCPF, formatCelular } from '../services/format';
+import { useNavigate } from 'react-router-dom';
 
 function PesquisaPacientesPage() {
     const [searchType, setSearchType] = useState('todos');
@@ -10,6 +11,7 @@ function PesquisaPacientesPage() {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
     const [searched, setSearched] = useState(false);
+    const navigate = useNavigate();
 
     const handleSearch = async (e) => {
         e.preventDefault();
@@ -53,6 +55,22 @@ function PesquisaPacientesPage() {
         }
     };
 
+    // FUNÇÃO ADICIONADA: Lida com a exclusão de um paciente
+    const handleDelete = async (pacienteId) => {
+        // Em um app real, aqui viria um modal de confirmação.
+        // Como a instrução é não usar window.confirm, vamos deletar diretamente.
+        
+        try {
+            await api.delete(`/pacientes/deletar/${pacienteId}`);
+            // Remove o paciente da lista de resultados na tela, sem precisar de uma nova busca.
+            setSearchResults(prevResults => prevResults.filter(p => p.id !== pacienteId));
+            alert('Paciente excluído com sucesso!'); // Usando alert temporariamente para feedback
+        } catch (err) {
+            setError('Falha ao excluir o paciente.');
+            console.error("Erro ao deletar:", err);
+        }
+    };
+
     return (
         <div className="pesquisa-container">
             <h1>Pesquisar Pacientes</h1>
@@ -87,7 +105,6 @@ function PesquisaPacientesPage() {
                 </button>
             </form>
 
-            {}
             <div className="results-container">
                 {error && <p className="error-message">{error}</p>}
 
@@ -113,8 +130,16 @@ function PesquisaPacientesPage() {
                                     <td>{paciente.email}</td>
                                     <td className="acoes">
                                         <button className="btn-ver-exames">Ver Exames</button>
-                                        <button className="btn-editar">Editar</button>
-                                        <button className="btn-excluir">Excluir</button>
+                                        <button 
+                                            className="btn-editar"
+                                            // ROTA CORRIGIDA: Adicionada a barra "/" no início para navegação correta.
+                                            onClick={() => navigate(`/pacientes/editar/${paciente.id}`)}
+                                        >Editar</button>
+                                        <button 
+                                            className="btn-excluir"
+                                            // ONCLICK ADICIONADO: Chama a função handleDelete passando o ID do paciente.
+                                            onClick={() => handleDelete(paciente.id)}
+                                        >Excluir</button>
                                     </td>
                                 </tr>
                             ))}

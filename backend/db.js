@@ -9,7 +9,6 @@ const pool = new Pool({
   port: process.env.DB_PORT, 
 });
 
-
 pool.connect((err) => {
   if (err) {
     console.error('Erro ao conectar ao banco:', err.stack);

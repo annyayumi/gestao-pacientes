@@ -15,7 +15,7 @@ Com ela, é possível visualizar pacientes, acessar seus exames, além de adicio
 ### 🔧 Próximas Funcionalidades
 
 - [X] **AC 1** – Cadastrar um novo paciente  
-- [ ] **AC 2** – Exibir todos os pacientes cadastrados e permitir a busca por ID e CPF 
+- [X] **AC 2** – Exibir todos os pacientes cadastrados e permitir a busca por ID e CPF 
 - [ ] **AC 3** – Editar os dados de um paciente existente  
 - [ ] **AC 4** – Excluir um paciente do banco de dados  
 - [ ] **Futuro** – Integrar os arquivos de exames de cada paciente, permitindo:  
@@ -33,7 +33,7 @@ Com ela, é possível visualizar pacientes, acessar seus exames, além de adicio
 ## 🚀 Começando
 Estas instruções permitirão que você obtenha uma cópia do projeto em operação em sua máquina local para fins de desenvolvimento e teste. Certifique-se de que: 
 
-- Você instalou a versão mais recente de <Node.js, Git / cors, dotenv, express, pg, nodemon, mongoose>
+- Você instalou a versão mais recente de <Node.js / Git>
 - Você tem uma máquina <Windows / Linux / Mac>
 
 ### Como instalar o projeto
@@ -43,7 +43,7 @@ Estas instruções permitirão que você obtenha uma cópia do projeto em opera�
 - Instalar as dependências:
   - cd gestao-pacientes
   - cd backend
-  - npm install
+  - npm install cors, dotenv, express, pg, nodemon, mongoose
   - cd ..
   - cd frontend
   - npm install mongoose

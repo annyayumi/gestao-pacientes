@@ -16,7 +16,7 @@ Com ela, é possível visualizar pacientes, acessar seus exames, além de adicio
 
 - [X] **AC 1** – Cadastrar um novo paciente  
 - [X] **AC 2** – Exibir todos os pacientes cadastrados e permitir a busca por ID e CPF 
-- [ ] **AC 3** – Editar os dados de um paciente existente  
+- [X] **AC 3** – Editar os dados de um paciente existente  
 - [ ] **AC 4** – Excluir um paciente do banco de dados  
 - [ ] **Futuro** – Integrar os arquivos de exames de cada paciente, permitindo:  
   - Visualização dos laudos em tela  

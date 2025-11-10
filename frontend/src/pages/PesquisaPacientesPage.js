@@ -55,16 +55,12 @@ function PesquisaPacientesPage() {
         }
     };
 
-    // FUNÇÃO ADICIONADA: Lida com a exclusão de um paciente
     const handleDelete = async (pacienteId) => {
-        // Em um app real, aqui viria um modal de confirmação.
-        // Como a instrução é não usar window.confirm, vamos deletar diretamente.
         
         try {
             await api.delete(`/pacientes/deletar/${pacienteId}`);
-            // Remove o paciente da lista de resultados na tela, sem precisar de uma nova busca.
             setSearchResults(prevResults => prevResults.filter(p => p.id !== pacienteId));
-            alert('Paciente excluído com sucesso!'); // Usando alert temporariamente para feedback
+            alert('Paciente excluído com sucesso!'); 
         } catch (err) {
             setError('Falha ao excluir o paciente.');
             console.error("Erro ao deletar:", err);
@@ -132,12 +128,10 @@ function PesquisaPacientesPage() {
                                         <button className="btn-ver-exames">Ver Exames</button>
                                         <button 
                                             className="btn-editar"
-                                            // ROTA CORRIGIDA: Adicionada a barra "/" no início para navegação correta.
                                             onClick={() => navigate(`/pacientes/editar/${paciente.id}`)}
                                         >Editar</button>
                                         <button 
                                             className="btn-excluir"
-                                            // ONCLICK ADICIONADO: Chama a função handleDelete passando o ID do paciente.
                                             onClick={() => handleDelete(paciente.id)}
                                         >Excluir</button>
                                     </td>

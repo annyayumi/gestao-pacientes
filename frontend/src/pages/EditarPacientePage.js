@@ -5,7 +5,7 @@ import api from '../services/api';
 import './CadastroPaciente.css';
 
 function EditarPacientePage() {
-    const { id } = useParams(); // Pega o 'id' da URL, ex: /pacientes/editar/12
+    const { id } = useParams();
     const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
@@ -21,7 +21,6 @@ function EditarPacientePage() {
     const [error, setError] = useState('');
 
     useEffect(() => {
-        // Função para buscar todos os exames disponíveis
         const fetchExames = api.get('/exames').then(response => {
             setExamesDisponiveis(response.data);
         }).catch(err => {
@@ -29,28 +28,22 @@ function EditarPacientePage() {
             setError('Erro ao carregar lista de exames.');
         });
 
-        // Função para buscar os dados do paciente específico que será editado
         const fetchPaciente = api.get(`/pacientes/${id}`).then(response => {
             const paciente = response.data;
-            // Popula o formulário com os dados do paciente
             setFormData({
                 nome_completo: paciente.nome_completo || '',
                 celular: paciente.celular || '',
                 cpf: paciente.cpf || '',
                 email: paciente.email || ''
             });
-            // Marca os checkboxes dos exames que o paciente já possui
             setSelectedExames(new Set(paciente.exames));
         }).catch(err => {
             console.error("Erro ao buscar dados do paciente:", err);
             setError('Paciente não encontrado ou erro ao carregar dados.');
         });
-        
-        // Executa as duas buscas em paralelo
         Promise.all([fetchExames, fetchPaciente]);
 
-    }, [id]); // Este useEffect roda sempre que o ID na URL mudar
-
+    }, [id]);
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData(prevState => ({ ...prevState, [name]: value }));
@@ -78,14 +71,12 @@ function EditarPacientePage() {
             exames: Array.from(selectedExames)
         };
         
-        // Não enviamos o CPF pois ele não deve ser alterado
         delete submissionData.cpf;
 
         try {
             const response = await api.put(`/pacientes/editar/${id}`, submissionData);
             setMessage(response.data.message + " Redirecionando em 3 segundos...");
             
-            // Redireciona o usuário de volta para a página de pesquisa após 3 segundos
             setTimeout(() => {
                 navigate('/pacientes/pesquisar');
             }, 3000);
@@ -139,7 +130,6 @@ function EditarPacientePage() {
                         ))}
                     </div>
                 </details>
-                <p>* Preenchimento obrigatório</p>
                 <div className='botao-main'>
                     <button className='botao' type="submit" disabled={loading}>
                         {loading ? 'Salvando...' : 'Salvar Alterações'}

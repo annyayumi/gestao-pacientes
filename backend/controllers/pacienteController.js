@@ -52,29 +52,20 @@ exports.listarPacientes = async (req, res) => {
 exports.pacientId = async (req, res) => {
     const { id } = req.params;
     try {
-        // Busca dados do paciente
         const pacienteResult = await db.query(
             'SELECT * FROM pacientes WHERE id = $1',
             [id]
         );
-        
         if (pacienteResult.rows.length === 0) {
             return res.status(404).json({ message: 'Paciente não encontrado' });
         }
-
-        // Busca os exames associados
         const examesResult = await db.query(
             'SELECT exame_id FROM paciente_exames WHERE paciente_id = $1',
             [id]
         );
-
         const paciente = pacienteResult.rows[0];
-        // Extrai apenas os IDs dos exames para um array [1, 3, 5]
         const exames = examesResult.rows.map(row => row.exame_id);
-
-        // Retorna o paciente junto com seu array de exames
         res.status(200).json({ ...paciente, exames });
-
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
@@ -97,24 +88,7 @@ exports.pacienteCpf = async (req, res) => {
         }
 };
 
-/*exports.pacientId = async (req, res) => {
-    const {id} = req.params;
-    try{
-        const result = await db.query(
-            'SELECT * FROM pacientes WHERE id = $1',
-            [id]
-        )
-        if (result.rows.length === 0) {
-            return res.status(404).json({ message: 'Paciente não encontrado' });
-        }
-        res.status(200).json(result.rows[0]);
-    } catch (error) {
-        res.status(500).json({ error: error.message });
-    }
-}*/
-
 exports.deletarPaciente = async (req, res) => {
-    // A função agora pega o 'id' dos parâmetros da rota
     const { id } = req.params;
 
     if (!id) {
@@ -156,8 +130,6 @@ exports.deletarPaciente = async (req, res) => {
 exports.atualizarPaciente = async (req, res) => {
     const { id } = req.params;
     const { nome_completo, celular, email, exames } = req.body;
-
-    // Validação básica
     if (!nome_completo || !exames || exames.length === 0) {
         return res.status(400).json({ error: 'Nome e pelo menos um exame são obrigatórios.' });
     }
@@ -166,29 +138,19 @@ exports.atualizarPaciente = async (req, res) => {
 
     try {
         await client.query('BEGIN');
-
-        // 1. Atualizar os dados na tabela 'pacientes'
         const updatePacienteQuery = `
             UPDATE pacientes 
             SET nome_completo = $1, celular = $2, email = $3 
             WHERE id = $4
         `;
         await client.query(updatePacienteQuery, [nome_completo, celular, email, id]);
-
-        // 2. Deletar todos os exames antigos associados a este paciente
         await client.query('DELETE FROM paciente_exames WHERE paciente_id = $1', [id]);
-
-        // 3. Inserir a nova lista de exames
         const insertExameQuery = 'INSERT INTO paciente_exames (paciente_id, exame_id) VALUES ($1, $2)';
         for (const exameId of exames) {
             await client.query(insertExameQuery, [id, exameId]);
         }
-
-        // 4. Efetivar a transação
         await client.query('COMMIT');
-
         res.status(200).json({ message: 'Paciente atualizado com sucesso!' });
-
     } catch (error) {
         await client.query('ROLLBACK');
         console.error('Erro ao atualizar paciente:', error);
